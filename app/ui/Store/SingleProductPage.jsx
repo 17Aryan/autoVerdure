@@ -369,55 +369,55 @@ const SingleProductPage = ({ productData, allProducts }) => {
 
               {/* Product Color */}
               <div>
-      <p className="text-sm font-normal">Color</p>
+                <p className="text-sm font-normal">Color</p>
 
-      <div className="mt-[12px] w-[306px] flex gap-4">
-        {(productData.white === 'true') && (
-          <div onClick={() => setSelectedColor("White")}
-          className={
-            selectedColor === "White" 
-            ?"w-[30px] h-[30px] text-[13px] rounded-full bg-[#FFFFFF] cursor-pointer rounded-corner"
-            :"w-[30px] h-[30px] text-[13px] rounded-full bg-[#FFFFFF] cursor-pointer rounded-black-corner"
-          } />
-        )}
-        {(productData.cream === 'true') && (
-          <div onClick={() => setSelectedColor("Cream")}
-          className={
-            selectedColor === "Cream" 
-            ?"w-[30px] h-[30px] text-[13px] rounded-full bg-[#FFFDD0] cursor-pointer rounded-corner"
-            :"w-[30px] h-[30px] text-[13px] rounded-full bg-[#FFFDD0] cursor-pointer rounded-black-corner"
-          } />
-        )}
-        {(productData.lightGrey === 'true') && (
-          <div onClick={() => setSelectedColor("LightGrey")}
-          className={
-            selectedColor === "LightGrey" 
-            ?"w-[30px] h-[30px] text-[13px] rounded-full bg-[#D3D3D3] cursor-pointer rounded-corner"
-            : "w-[30px] h-[30px] text-[13px] rounded-full bg-[#D3D3D3] cursor-pointer rounded-black-corner"
-            } />
-        )}
-        {(productData.darkGrey === 'true') && (
-          <div onClick={() => setSelectedColor("DarkGrey")}
-          className={
-            selectedColor === "DarkGrey" 
-            ?"w-[30px] h-[30px] text-[13px] rounded-full bg-[#A9A9A9] cursor-pointer rounded-corner"
-            : "w-[30px] h-[30px] text-[13px] rounded-full bg-[#A9A9A9] cursor-pointer rounded-black-corner"
-          } />
-        )}
-        {(productData.black === 'true') && (
-          <div onClick={() => setSelectedColor("Black")}
-          className={
-            selectedColor === "Black" 
-            ?"w-[30px] h-[30px] text-[13px] rounded-full bg-[#000000] cursor-pointer rounded-corner"
-            : "w-[30px] h-[30px] text-[13px] rounded-full bg-[#000000] cursor-pointer rounded-black-corner"
-            } />
-        )}
-      </div>
-    </div>
+                <div className="mt-[12px] w-[306px] flex gap-4">
+                  {(productData.white === 'true') && (
+                    <div onClick={() => setSelectedColor("White")}
+                    className={
+                      selectedColor === "White" 
+                      ?"w-[30px] h-[30px] text-[13px] rounded-full bg-[#FFFFFF] cursor-pointer rounded-corner"
+                      :"w-[30px] h-[30px] text-[13px] rounded-full bg-[#FFFFFF] cursor-pointer rounded-black-corner"
+                    } />
+                  )}
+                  {(productData.cream === 'true') && (
+                    <div onClick={() => setSelectedColor("Cream")}
+                    className={
+                      selectedColor === "Cream" 
+                      ?"w-[30px] h-[30px] text-[13px] rounded-full bg-[#FFFDD0] cursor-pointer rounded-corner"
+                      :"w-[30px] h-[30px] text-[13px] rounded-full bg-[#FFFDD0] cursor-pointer rounded-black-corner"
+                    } />
+                  )}
+                  {(productData.lightGrey === 'true') && (
+                    <div onClick={() => setSelectedColor("LightGrey")}
+                    className={
+                      selectedColor === "LightGrey" 
+                      ?"w-[30px] h-[30px] text-[13px] rounded-full bg-[#D3D3D3] cursor-pointer rounded-corner"
+                      : "w-[30px] h-[30px] text-[13px] rounded-full bg-[#D3D3D3] cursor-pointer rounded-black-corner"
+                      } />
+                  )}
+                  {(productData.darkGrey === 'true') && (
+                    <div onClick={() => setSelectedColor("DarkGrey")}
+                    className={
+                      selectedColor === "DarkGrey" 
+                      ?"w-[30px] h-[30px] text-[13px] rounded-full bg-[#A9A9A9] cursor-pointer rounded-corner"
+                      : "w-[30px] h-[30px] text-[13px] rounded-full bg-[#A9A9A9] cursor-pointer rounded-black-corner"
+                    } />
+                  )}
+                  {(productData.black === 'true') && (
+                    <div onClick={() => setSelectedColor("Black")}
+                    className={
+                      selectedColor === "Black" 
+                      ?"w-[30px] h-[30px] text-[13px] rounded-full bg-[#000000] cursor-pointer rounded-corner"
+                      : "w-[30px] h-[30px] text-[13px] rounded-full bg-[#000000] cursor-pointer rounded-black-corner"
+                      } />
+                  )}
+                </div>
+              </div>
 
               {/* Product Finish */}
               <div>
-                <p className="text-sm font-normal">Finish</p>
+                <p className="text-sm font-normal">Styles</p>
 
                 <div className="mt-[12px] w-fit flex gap-4">
                   <div className="w-full flex">

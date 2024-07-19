@@ -2,12 +2,19 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React,{useState} from "react";
 import { navItems } from "../constant/data";
 import { usePathname } from "next/navigation";
+import { FaSearch } from "react-icons/fa";
 
 const Navbar = () => {
-    let pathname = usePathname();
+  const [isVisible, setIsVisible] = useState(false);
+  
+  const toggleSearchBar = (e) => {
+    e.preventDefault();
+    setIsVisible(!isVisible);
+  } 
+  let pathname = usePathname();
     if (pathname) {
         pathname = pathname.split("/").pop();
     } else {
@@ -77,24 +84,30 @@ const Navbar = () => {
 
       {/* Search Bar, Cart, User Avatar */}
       <div className="hidden xl:flex gap-[15px]">
-        <div className="w-[240px] h-[50px] pr-[17px] flex justify-between items-center border-2 border-primaryBg rounded-[999px] bg-secondaryBg">
-          <input
-            className="pl-5 py-[16.6px] mr-[17px] rounded-[999px] border-r-2 w-full h-full focus:outline-black rounded-r-none bg-secondaryBg"
-            type="text"
-            placeholder="Search"
-            autoComplete="false"
-            spellCheck="false"
-          />
-          <div className="cursor-pointer">
-            <Image
-              className="object-contain w-4 h-4"
-              src="/search.svg"
-              alt="search"
-              width={16}
-              height={16}
-            />
-          </div>
-        </div>
+      <div className="relative flex items-center justify-center w-full">
+      <form className={`relative flex items-center transition-all duration-300 ease-out ${isVisible ? 'w-full' : 'w-12'}`}>
+        {/* Search Input */}
+        <input
+          type="search"
+          name="search"
+          pattern=".*\S.*"
+          required
+          className={`transition-all duration-300 ease-out bg-white border-2 border-gray-700 rounded-full px-3 py-2 shadow-inner focus:outline-none ${isVisible ? 'w-full scale-100' : 'w-0 scale-0'} peer`}
+          placeholder="Search"
+          autoComplete="off"
+          spellCheck="false"
+          onBlur={() => setIsVisible(false)} // Hide search bar when it loses focus
+        />
+        {/* Search Button */}
+        <button
+          type="submit"
+          onClick={toggleSearchBar}
+          className={`transition-all duration-300 ease-out bg-gray-700 rounded-full flex items-center justify-center w-12 h-12 shadow-lg transform rotate-45 ${isVisible ? 'opacity-0' : 'opacity-100'}`}
+        >
+          <FaSearch className="text-white" />
+        </button>
+      </form>
+    </div>
 
         <div className="gap-4 flex justify-center items-center">
           <Link href="/cart" className="w-[24.53px] h-[24.53px]">
