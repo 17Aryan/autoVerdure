@@ -2,8 +2,5 @@
   "extends": "next/core-web-vitals",
   "web": {
     "broswer": true
-  },
-  "rules": {
-    "import/no-extraneous-dependencies": ["error",  {"devDependencies": true}], 
   }
 }

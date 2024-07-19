@@ -30,6 +30,7 @@ const ProductListPage = () => {
   });
   const [colors, setColors]= useState([]);
   const [size, setSize]= useState([]);
+  const [finish, setFinish] = useState([]);
 
   const colorOptions=[
     {value: 'white', label: 'White'},
@@ -45,6 +46,12 @@ const ProductListPage = () => {
     {value: 'M',label: 'M'},
     {value: 'L',label: 'L'},
     {value: 'XL',label: 'XL'},
+  ];
+
+  const finishOptions = [
+    {value: 'matt', label: 'Matt'},
+    {value: 'gloss', label: 'Gloss'},
+    {value: 'Art', label: 'Art'},
   ];
   const [loading, setLoading] = useState(false);
   const [editIndex, setEditindex] = useState(null);
@@ -103,6 +110,7 @@ const ProductListPage = () => {
       },
       colors: colors.map(color => color.value),
       size: size.map(size => size.value),
+      finish: finish.map(finish => finish.value),
     };
     
     if(editIndex !== null)
@@ -369,6 +377,21 @@ const ProductListPage = () => {
               </div>
             </div>
             <div className="form-group">
+              <label>Styles</label>
+              <div className="checkbox-group">
+              <Select
+                isMulti
+                name="finish"
+                options={finishOptions}
+                className="basic-multi-select"
+                classNamePrefix="select"
+                value={finish}
+                onChange={setFinish}
+              />
+              </div>
+            </div>
+
+            <div className="form-group">
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <div style={{ width: "48%" }}>
                   <label>Stock Quantity</label>
@@ -546,7 +569,7 @@ export async function getServerSideProps() {
 
   const products = [...(zenpot ? zenpot : []), ...(grobox ? grobox : []), ...(plant ? plant : [])];
 
-  console.log(products)
+  // console.log(products)
   return {
     
     props: {
