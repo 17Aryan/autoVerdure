@@ -5,15 +5,23 @@ import Link from "next/link";
 import React,{useState} from "react";
 import { navItems } from "../constant/data";
 import { usePathname } from "next/navigation";
-import { FaSearch } from "react-icons/fa";
+import { FaSearch,FaTimes } from "react-icons/fa";
 
 const Navbar = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [searchText, setSearchText] = useState("");
+
   
   const toggleSearchBar = (e) => {
     e.preventDefault();
     setIsVisible(!isVisible);
   } 
+
+  const handleClear = () => {
+    setSearchText("");
+    setIsVisible(false);
+  };
+
   let pathname = usePathname();
     if (pathname) {
         pathname = pathname.split("/").pop();
@@ -85,26 +93,42 @@ const Navbar = () => {
       {/* Search Bar, Cart, User Avatar */}
       <div className="hidden xl:flex gap-[15px]">
       <div className="relative flex items-center justify-center w-full">
-      <form className={`relative flex items-center transition-all duration-300 ease-out ${isVisible ? 'w-full' : 'w-12'}`}>
+      <form className={`relative flex items-center transition-all duration-300 ease-out ${isVisible ? 'w-full' : 'w-10'}`}>
         {/* Search Input */}
-        <input
-          type="search"
-          name="search"
-          pattern=".*\S.*"
-          required
-          className={`transition-all duration-300 ease-out bg-white border-2 border-gray-700 rounded-full px-3 py-2 shadow-inner focus:outline-none ${isVisible ? 'w-full scale-100' : 'w-0 scale-0'} peer`}
-          placeholder="Search"
-          autoComplete="off"
-          spellCheck="false"
-          onBlur={() => setIsVisible(false)} // Hide search bar when it loses focus
-        />
+        <div className="relative w-full ">
+          <input
+            type="search"
+            name="search"
+            pattern=".*\S.*"
+            required
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+            className={`transition-all duration-300 ease-out bg-white border-2 border-gray-700 rounded-full px-3 py-2 shadow-inner focus:outline-none peer ${isVisible ? 'w-full scale-100' : 'w-0 scale-0'} pl-12 pr-10`}
+            placeholder="Search"
+            autoComplete="off"
+            spellCheck="false"
+            onBlur={() => setIsVisible(false)} // Hide search bar when it loses focus
+          />
+          {searchText && (
+            <button
+              type="button"
+              onClick={handleClear}
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-700 dark:text-gray-300 bg-transparent"
+            >
+              {/* <FaTimes className="text-gray-700" /> */}
+            </button>
+          )}
+        </div>
         {/* Search Button */}
         <button
           type="submit"
           onClick={toggleSearchBar}
-          className={`transition-all duration-300 ease-out bg-gray-700 rounded-full flex items-center justify-center w-12 h-12 shadow-lg transform rotate-45 ${isVisible ? 'opacity-0' : 'opacity-100'}`}
+          className={`relative right-6 transition-all duration-300 ease-out bg-transparent flex items-center justify-center transform ${isVisible ? 'opacity-0' : 'opacity-100'}`}
         >
-          <FaSearch className="text-white" />
+          <svg className="w-6 h-6 fill-current text-gray-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+            <title>Search</title>
+            <path d="M41.7,3.3C20.6,3.3,3.4,20,3.4,40.7s17.1,37.4,38.3,37.4c5.9,0,11.5-1.3,16.5-3.7c2.5-1.2,5.5-0.6,7.5,1.3l19.4,19c2.6,2.5,6.7,2.5,9.3,0l0,0c2.7-2.6,2.7-6.9,0-9.6L76.1,67.3c-2.2-2.1-2.7-5.5-1.1-8.1c3.2-5.4,5-11.7,5-18.4C80,20,62.9,3.3,41.7,3.3L41.7,3.3z M41.7,12.1C57.9,12.1,71,24.9,71,40.7S57.9,69.4,41.7,69.4S12.5,56.6,12.5,40.7S25.5,12.1,41.7,12.1L41.7,12.1z"></path>
+          </svg>
         </button>
       </form>
     </div>

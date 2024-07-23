@@ -220,6 +220,7 @@ const ProductListPage = () => {
     });
     setColors(colorOptions.filter(option => editedProduct.colors.includes(option.value)));
     setSize(sizeOptions.filter(option => editedProduct.size.includes(option.value)));
+    setFinish(finishOptions.filter(option => editedProduct.finish.includes(option.value)));
     setShowForm(true);
     setEditindex(index);
   };
@@ -247,7 +248,7 @@ const ProductListPage = () => {
     });
     setColors([])
     setSize([])
-    
+    setFinish([])
   };
 
   const handleCheckboxChange = (index) => {
@@ -422,6 +423,7 @@ const ProductListPage = () => {
                 <option value="GroBox">GroBox</option>
                 <option value="ZenPot">ZenPot</option>
                 <option value="Plant">Plant</option>
+                <option value="accessory">Accessory</option>
               </select>
             </div>
             <div className="form-group">
@@ -566,8 +568,9 @@ export async function getServerSideProps() {
   const zenpot = await findAllProducts('zenpot');
   const grobox = await findAllProducts('grobox');
   const plant = await findAllProducts('plants');
+  const accessory = await findAllProducts('accessory');
 
-  const products = [...(zenpot ? zenpot : []), ...(grobox ? grobox : []), ...(plant ? plant : [])];
+  const products = [...(zenpot ? zenpot : []), ...(grobox ? grobox : []), ...(plant ? plant : []), ...(accessory ? accessory : [])];
 
   // console.log(products)
   return {

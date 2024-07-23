@@ -13,6 +13,7 @@ import Head from "next/head";
 import { longDescription, specifications } from "@/app/constant/data";
 import Accordion_Product from "./Accordion_products";
 import Accordion_Specs from "./Accordion_specifications";
+import SelectedOptionsPlaceholder from "./Selected_Options_Placeholder";
 
 const SingleProductPage = ({ productData, allProducts }) => {
   useEffect(() => {
@@ -453,6 +454,9 @@ const SingleProductPage = ({ productData, allProducts }) => {
                 </div>
               </div>
             </div>
+
+            {/* Placeholder */}
+            <SelectedOptionsPlaceholder selectedColor={selectedColor} selectedStyle={style} />
 
             {/* Discount Card */}
             <div className="mt-[37.5px] sm:mt-6 w-full flex flex-col gap-6 p-2 xl:p-5 rounded-xl border-[1px] bg-primaryMain bg-opacity-10 border-primaryMain">

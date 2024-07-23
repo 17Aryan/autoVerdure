@@ -1,7 +1,14 @@
-import React from "react";
+import React,{useState} from "react";
 
 const Orders = (props) => {
   const orders = props.orders;
+  const [clickedOrders, setClickedOrders] = useState([]);
+  const [unprocessedOrders, setUnprocessedOrders] = useState(orders);
+
+  const handleOrderClick = (order) =>{
+    setClickedOrders([...clickedOrders, order]);
+    setUnprocessedOrders(unprocessedOrders.filter((item) => item !== order));
+  }
   return (
     <div className="py-[62px] md:pt-[132px] md:pb-[188px] xl:pt-[106px] xl:pb-[260px] 2xl:pb-[320px] px-4 md:px-[51px] xl:px-[216px] 2xl:px-[270px] flex flex-col gap-5 bg-[#FFFCF8]">
       <div className="mt-[30px] flex flex-col gap-y-5">
