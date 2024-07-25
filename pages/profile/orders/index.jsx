@@ -1,14 +1,8 @@
 import React,{useState} from "react";
+import OrderList from "../orderlist";
 
 const Orders = (props) => {
   const orders = props.orders;
-  const [clickedOrders, setClickedOrders] = useState([]);
-  const [unprocessedOrders, setUnprocessedOrders] = useState(orders);
-
-  const handleOrderClick = (order) =>{
-    setClickedOrders([...clickedOrders, order]);
-    setUnprocessedOrders(unprocessedOrders.filter((item) => item !== order));
-  }
   return (
     <div className="py-[62px] md:pt-[132px] md:pb-[188px] xl:pt-[106px] xl:pb-[260px] 2xl:pb-[320px] px-4 md:px-[51px] xl:px-[216px] 2xl:px-[270px] flex flex-col gap-5 bg-[#FFFCF8]">
       <div className="mt-[30px] flex flex-col gap-y-5">
@@ -20,7 +14,7 @@ const Orders = (props) => {
             >
               <div className="flex justify-between items-center">
                 <div className="w-[120px] font-[600] text-[#151C28]">
-                  <p>{order.productName}</p>
+                  <p>{order.orderedProducts[0].productName}</p>
                 </div>
                 <div className="pr-[23px] text-[#585562]">
                   <p>paid</p>
@@ -60,34 +54,7 @@ const Orders = (props) => {
           </tr>
         </thead>
 
-        <tbody className="mt-[30px] hidden md:flex flex-col gap-5">
-          {orders.map((order, index) => (
-            <tr
-              key={index}
-              className="px-[35px] py-[38px] text-xs w-full border-[1px] border-black rounded-2xl bg-white flex justify-between items-center"
-            >
-              <td className="w-[150px]">{order.orderedProducts[0].productName + ((order.orderedProducts.length == 1) ? '' : `+ ${order.orderedProducts.length - 1} more`)}</td>
-
-              <td>{order.shippingAddress.city}</td>
-
-              <td>Product</td>
-
-              <td>Paid</td>
-
-              <td
-                className={
-                  order.orderStatus === "Delivered"
-                    ? "px-4 py-2 rounded-[20px] w-[130px] flex justify-center items-center bg-secondarySuccessAlerts bg-opacity-10 text-secondarySuccessAlerts"
-                    : "px-4 py-2 rounded-[20px] w-[130px] flex justify-center items-center bg-[#FFF5EB] text-[#FB7E15]"
-                }
-              >
-                {order.orderStatus}
-              </td>
-
-              <td width={"100px"}>{order.orderTime}</td>
-            </tr>
-          ))}
-        </tbody>
+        <OrderList orders={orders} />
       </table>
     </div>
   );
@@ -101,6 +68,7 @@ export async function getServerSideProps({req, res}) {
 
   if (user) {
     const orders = await findAllOrders(user.email);
+    console.log(orders);
     return {
       props: {
         orders: orders

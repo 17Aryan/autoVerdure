@@ -81,6 +81,7 @@ const SingleProductPage = ({ productData, allProducts }) => {
     setButtonText('Adding...');
 
     const payload = {
+      productImage: productData.productImages[0],
       productId: productData.productId,
       productColor: selectedColor,
       productSize: size,
@@ -123,6 +124,7 @@ const SingleProductPage = ({ productData, allProducts }) => {
 
     dispatch(setProducts([
       {
+        productImage: productData.productImages[0], 
         productId: productData.productId,
         price: productData.productPrice,
         productColor: selectedColor,

@@ -57,7 +57,7 @@ const Payment = (props) => {
                   email: email,
                   shippingAddress: address
                 }
-
+                console.log(products)
                 dispatch(setEmail(''));
                 dispatch(setShippingAddress({}));
                 dispatch(setProducts([]));
