@@ -25,21 +25,24 @@ async function addUserSession(userDetails) {
         email: userDetails.email,
         sessionToken: createSessionToken(),
     };
-
+    console.log(userData.sessionToken);
     try {
         const userQuerySnapshot = await db.collection('users').doc(userDetails.email).get();
 
-        if (!userQuerySnapshot.empty) {
+        if (userQuerySnapshot.exists) {
+            console.log('User q');
             await db.collection('users').doc(userDetails.email).update(userData);
         } else {
             userData['admin'] = false;
             await db.collection('users').doc(userDetails.email).set(userData);
         }
         return userData.sessionToken;
-    } catch (error) {
+    } 
+    catch (error) {
+        console.log('Error adding user session', error);
         return false;
+        
     }
-
 }
 
 export default async function handler(req, res) {
@@ -55,11 +58,14 @@ export default async function handler(req, res) {
             const {keys} = await response.json();
             const decodedToken = jwt.decode(data.credential, keys[0].n);
             if (decodedToken.aud !== '704145836182-04mlgm7nhg2n4sjqno7vlh172427g778.apps.googleusercontent.com') {
+                console.log('Invalid aud token')
                 return res.status(401).json({error: 'Invalid token'});
             }
+            console.log(decodedToken);
             const sessionToken = await addUserSession(decodedToken);
 
             if (!sessionToken) {
+                console.log('No session tokens')
                 res.status(401).json({ error: 'Something went wrong while adding session' });
             } else {
                 setCookie(res, sessionToken)
@@ -67,6 +73,7 @@ export default async function handler(req, res) {
             }
 
         } catch (e) {
+            console.log(e);
             res.status(401).json({ error: 'Invalid token' });
         }
     } else {

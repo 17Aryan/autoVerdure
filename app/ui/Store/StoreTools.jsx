@@ -17,8 +17,6 @@ const StoreTools = () => {
     color: []
   });
 
-  // const [isFilterBoxOpen, setIsFilterBoxOpen] = useState(true);
-
   const [appliedFilters, setAppliedFilters] = useState({
     plantType: [],
     potType: [],
@@ -38,8 +36,6 @@ const StoreTools = () => {
   };
 
   const applyFilters = () => {
-    // onApplyFilters(selectedFilters);
-    // setIsFilterBoxOpen(false);
     setAppliedFilters(selectedFilters);
     setOpenFilter(false);
   };
@@ -140,7 +136,7 @@ const StoreTools = () => {
                               onClick={() => handleSelection('plantType', type)}
                               style={{ gap: index === 0 ? '324px' : index === 1 ? '312px' : '306px' }}
                             >
-                              <div className="text-black text-[13px] font-normal font-['Poppins'] leading-7">
+                              <div className="text-black text-[13px] font-normal font-['Poppins'] leading-7 ">
                                 {type}
                               </div>
                               <div className="text-right text-black text-[13px] font-normal font-['Poppins'] leading-7">

@@ -13,6 +13,8 @@ import Head from "next/head";
 import { longDescription, specifications } from "@/app/constant/data";
 import Accordion_Product from "./Accordion_products";
 import Accordion_Specs from "./Accordion_specifications";
+import SelectedOptionsPlaceholder from "./Selected_Options_Placeholder";
+// import products from "razorpay/dist/types/products";
 
 const SingleProductPage = ({ productData, allProducts }) => {
   useEffect(() => {
@@ -80,6 +82,7 @@ const SingleProductPage = ({ productData, allProducts }) => {
     setButtonText('Adding...');
 
     const payload = {
+      productImage: productData.productImages[0],
       productId: productData.productId,
       productColor: selectedColor,
       productSize: size,
@@ -122,6 +125,7 @@ const SingleProductPage = ({ productData, allProducts }) => {
 
     dispatch(setProducts([
       {
+        productImage: productData.productImages[0], 
         productId: productData.productId,
         price: productData.productPrice,
         productColor: selectedColor,
@@ -131,7 +135,7 @@ const SingleProductPage = ({ productData, allProducts }) => {
         productStyle: style
       }
     ]));
-
+    // console.log("Product Data: ", productData);
     router.push('/checkout/guest');
   }
 
@@ -453,6 +457,9 @@ const SingleProductPage = ({ productData, allProducts }) => {
                 </div>
               </div>
             </div>
+
+            {/* Placeholder */}
+            <SelectedOptionsPlaceholder selectedColor={selectedColor} selectedStyle={style} />
 
             {/* Discount Card */}
             <div className="mt-[37.5px] sm:mt-6 w-full flex flex-col gap-6 p-2 xl:p-5 rounded-xl border-[1px] bg-primaryMain bg-opacity-10 border-primaryMain">
