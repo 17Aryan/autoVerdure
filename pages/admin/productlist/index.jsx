@@ -93,20 +93,43 @@ const ProductListPage = () => {
 
     const createFormData = (product) => {
       const formData = new FormData();
-      Object.keys(product).forEach((key) => {
-        if (key === 'images') {
-          product.images.forEach((image, index) => {
-            formData.append(`images[${index}]`, image);
-          });
-        } else if (typeof product[key] === 'object' && product[key] !== null) {
-          Object.keys(product[key]).forEach((subKey) => {
-            formData.append(`${key}[${subKey}]`, product[key][subKey]);
-          });
-        } else {
-          formData.append(key, product[key]);
-        }
-      });
-      return formData;
+    formData.append("productName", product.name);
+    formData.append("productDetails", product.description);
+    formData.append("productPrice", product.price);
+    formData.append("type", product.type);
+    formData.append("stockQuantity", product.stockQuantity);
+    formData.append('firstImage', product.images[0]);
+    formData.append('secondImage', product.images[1]);
+    formData.append('thirdImage', product.images[2]);
+    formData.append('fourthImage', product.images[3]);
+    formData.append('fifthImage', product.images[4]);
+    formData.append('innerLength', product.innerLength);
+    formData.append('innerHeight', product.innerHeight);
+    formData.append('dimensions', product.dimensions);
+
+    Object.keys(product.attributes).forEach((key) => {
+      formData.append(`attributes[${key}]`, product.attributes[key]);
+    });
+
+    product.colors.forEach((color, index) => {
+      formData.append(`colors[${index}]`, color);
+    });
+
+    product.size.forEach((size, index) => {
+      formData.append(`size[${index}]`, size);
+    });
+
+    product.finish.forEach((finish, index) => {
+      formData.append(`finish[${index}]`, finish);
+    });
+
+    return formData;
+  };
+
+  const logFormData = (formData) => {
+    for (const [key, value] of formData.entries()) {
+      console.log(`${key}: ${value}`);
+    }
     };
   
     if (editIndex !== null) {
@@ -138,6 +161,8 @@ const ProductListPage = () => {
   
       try {
         const formData = createFormData(newProduct);
+        logFormData(formData);
+        
         const response = await fetch(`/api/products/update/${newProduct.id}`, {
           method: 'PUT',
           body: formData,

@@ -14,6 +14,7 @@ import { longDescription, specifications } from "@/app/constant/data";
 import Accordion_Product from "./Accordion_products";
 import Accordion_Specs from "./Accordion_specifications";
 import SelectedOptionsPlaceholder from "./Selected_Options_Placeholder";
+// import products from "razorpay/dist/types/products";
 
 const SingleProductPage = ({ productData, allProducts }) => {
   useEffect(() => {
@@ -134,7 +135,7 @@ const SingleProductPage = ({ productData, allProducts }) => {
         productStyle: style
       }
     ]));
-
+    // console.log("Product Data: ", productData);
     router.push('/checkout/guest');
   }
 

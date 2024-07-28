@@ -3,9 +3,14 @@ import OrderList from "../orderlist";
 
 const Orders = (props) => {
   const orders = props.orders;
+  const [selectedOrder, setSelectedOrder] = useState(null);
+
+  const handleOrderClick = (order) => {
+    setSelectedOrder(order);
+  };
   return (
     <div className="py-[62px] md:pt-[132px] md:pb-[188px] xl:pt-[106px] xl:pb-[260px] 2xl:pb-[320px] px-4 md:px-[51px] xl:px-[216px] 2xl:px-[270px] flex flex-col gap-5 bg-[#FFFCF8]">
-      <div className="mt-[30px] flex flex-col gap-y-5">
+      {/* <div className="mt-[30px] flex flex-col gap-y-5">
         {orders.map((order, index) => (
           <>
             <div
@@ -38,8 +43,8 @@ const Orders = (props) => {
             </div>
           </>
         ))}
-      </div>
-
+      </div> */}
+     {!selectedOrder && (    
       <table rules="all">
         <thead className="w-full px-[25px] mt-[30px] hidden md:flex flex-col gap-5">
           <tr className="justify-start items-start inline-flex flex justify-between items-center px-[35px]">
@@ -54,11 +59,19 @@ const Orders = (props) => {
           </tr>
         </thead>
 
-        <OrderList orders={orders} />
+        <OrderList orders={orders} onOrderClick={handleOrderClick}/>
       </table>
+    )}
+    {selectedOrder && (
+        <div className="mt-[30px]">
+          <OrderList orders={[selectedOrder]} />
+        </div>
+      )}
     </div>
   );
 };
+
+
 
 export async function getServerSideProps({req, res}) {
   const currentUser = (await import("@/lib/server/currentUser")).default;

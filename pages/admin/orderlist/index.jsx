@@ -1,42 +1,30 @@
 import React, { useState } from 'react';
-// import './styles.css'; 
 
 const OrderList = ({ orders = [], onOrderClick }) => {
   const [selectedOrder, setSelectedOrder] = useState(null);
-//   const [unprocessedOrders, setUnprocessedOrders] = useState(orders);
-  const [review, setReview] = useState('');  
+  // const [review, setReview] = useState('');
+  const [orderStatus, setOrderStatus] = useState('');
 
+  // Handle the click on an order
   const handleOrderClick = (order) => {
-    // setClickedOrders([...clickedOrders, order]);
-    // setUnprocessedOrders(unprocessedOrders.filter(o => o !== order));
     setSelectedOrder(order);
+    setOrderStatus(order.orderStatus); // Set the order status for the selected order
     if(onOrderClick){
       onOrderClick(order);
     }
   };
-
-  const handleInputChange = (e) =>{
-    // const { name, value } = e.target;
-    setReview(e.target.value);
-  };
-
-  const handleSubmitReview = () => {
-    console.log('Review Submitted:',review);
-  };
-
-  const mockData = orders.map(order => ({
-    ...order,
-    orderedProducts: order.orderedProducts.map(product => ({
-      ...product,
-      imageUrl: 'https://via.placeholder.com/350x350',
-      potSize: '12 x 16 inch',
-      arrivalTime: 'Arriving in 2 days'
-    }))
-  }))
-
   
+
+  // Handle order status change
+  const handleOrderStatusChange = (e) => {
+    setOrderStatus(e.target.value);
+    // Optionally, send the updated status to the server here
+    console.log(`Order status changed to ${e.target.value}`);
+  };
+
+  // Render detailed view of a selected order
   const renderOrderDetail = (order) => (
-    <div className="w-[1007px] h-[848px] bg-white rounded-2xl border border-black" >   
+    <div className="w-[1007px] h-[848px] bg-white rounded-2xl border border-black">   
       <div className="relative left-[90px] top-[50px] h-[765px] justify-start items-start gap-[92px] inline-flex">
         <div className="flex-col justify-start items-start gap-4 inline-flex">
           <img
@@ -74,19 +62,29 @@ const OrderList = ({ orders = [], onOrderClick }) => {
               <div className="text-[#585562] text-base font-normal font-['Urbanist'] tracking-tight">
                 Order ID: {order.orderId}
               </div>
-              <div className="w-[130px] h-[34px] px-4 py-2 bg-[#fff4ea] rounded-[20px] flex-col justify-start items-start gap-2.5 flex">
-                <div className="text-center text-[#fb7e15] text-xs font-normal font-['Urbanist'] tracking-tight">
-                  {order.orderedProducts[0].arrivalTime}
-                </div>
-              </div>
+              {/* <div className="w-[130px] h-[34px] px-4 py-2 bg-[#fff4ea] rounded-[20px] flex-col justify-start items-start gap-2.5 flex"> */}
+                {/* <div className="text-center text-[#fb7e15] text-xs font-normal font-['Urbanist'] tracking-tight"> */}
+                  <select
+                    value={orderStatus}
+                    onChange={handleOrderStatusChange}
+                    className="px-4 py-2 rounded-[20px] w-[200px] flex justify-center items-center bg-[#FFF5EB] text-[#FB7E15]"
+                  >
+                    <option value="Shipping">Shipping</option>
+                    <option value="Processing">Processing</option>
+                    <option value="Dispatch">Dispatch</option>
+                    <option value="Delivered">Delivered</option>
+                  </select>
+                  {/* {order.orderedProducts[0].arrivalTime} */}
+                {/* </div> */}
+              {/* </div> */}
             </div>
-            <div className="justify-start items-center gap-2.5 inline-flex">
+            {/* <div className="justify-start items-center gap-2.5 inline-flex">
               <div className="text-[#9a5cf5] text-base font-medium font-['Urbanist']">
                 View guides related to your product
               </div>
-            </div>
+            </div> */}
           </div>
-          <div className="flex-col justify-end items-end gap-5 flex">
+          {/* <div className="flex-col justify-end items-end gap-5 flex">
             <div className="flex-col justify-start items-start gap-[17px] flex">
               <div className="text-black text-xl font-semibold font-['Urbanist']">
                 Add a review
@@ -135,12 +133,18 @@ const OrderList = ({ orders = [], onOrderClick }) => {
                 Submit review
               </div>
             </div>
+          </div> */}
+          <div className="flex-col justify-start items-start gap-5 inline-flex">
+            {/* <div className="text-black text-xl font-semibold font-['Urbanist']">
+              Order Status
+            </div> */}
           </div>
         </div>
       </div>
     </div>
-    );
+  );
 
+  // Render the list of orders
   const renderOrderList = () => (
     <tbody className="mt-[30px] hidden md:flex flex-col gap-5">
       {orders.map((order, index) => (
@@ -154,16 +158,8 @@ const OrderList = ({ orders = [], onOrderClick }) => {
               ((order.orderedProducts.length === 1) ? '' : `+ ${order.orderedProducts.length - 1} more`)}
           </td>
           <td>{order.shippingAddress.city}</td>
-          <td>Product</td>
           <td>Paid</td>
-          <td className={
-            order.orderStatus === "Delivered"
-              ? "px-4 py-2 rounded-[20px] w-[130px] flex justify-center items-center bg-secondarySuccessAlerts bg-opacity-10 text-secondarySuccessAlerts"
-              : "px-4 py-2 rounded-[20px] w-[130px] flex justify-center items-center bg-[#FFF5EB] text-[#FB7E15]"
-          }>
-            {order.orderStatus}
-          </td>
-          <td width={"100px"}>{order.orderTime}</td>
+          <td>{order.orderTime}</td>
         </tr>
       ))}
     </tbody>
