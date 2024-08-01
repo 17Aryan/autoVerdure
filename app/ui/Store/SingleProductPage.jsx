@@ -100,6 +100,7 @@ const SingleProductPage = ({ productData, allProducts }) => {
       });
 
       if (response.ok) {
+        console.log(productData)
         setButtonText('Added');
         const result = await response.json();
         const cartProducts = result.cartProducts;
@@ -137,7 +138,7 @@ const SingleProductPage = ({ productData, allProducts }) => {
     ]));
     // console.log("Product Data: ", productData);
     router.push('/checkout/guest');
-  }
+  } 
 
   return (
     <div className="w-full px-[18px] sm:px-[38px] xl:px-16 bg-[#FFFCF8]">

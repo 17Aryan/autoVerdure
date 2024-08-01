@@ -10,6 +10,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { store, persistor } from "@/store/store";
 import { useRouter } from 'next/router';
 import App from 'next/app';
+import { OrderProvider } from './ordercontext';
 
 function MyApp({ Component, pageProps }) {
     useEffect(() => {
@@ -38,7 +39,9 @@ function MyApp({ Component, pageProps }) {
         <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
                 <Layout>
-                    <Component {...pageProps} />
+                    <OrderProvider>
+                        <Component {...pageProps} />
+                    </OrderProvider>
                 </Layout>
             </PersistGate>
         </Provider>

@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
-// import './styles.css'; 
+import './styles.css'; 
 
 const OrderList = ({ orders = [], onOrderClick }) => {
   const [selectedOrder, setSelectedOrder] = useState(null);
-//   const [unprocessedOrders, setUnprocessedOrders] = useState(orders);
   const [review, setReview] = useState('');  
 
   const handleOrderClick = (order) => {
-    // setClickedOrders([...clickedOrders, order]);
-    // setUnprocessedOrders(unprocessedOrders.filter(o => o !== order));
+    
     setSelectedOrder(order);
     if(onOrderClick){
       onOrderClick(order);
@@ -16,7 +14,6 @@ const OrderList = ({ orders = [], onOrderClick }) => {
   };
 
   const handleInputChange = (e) =>{
-    // const { name, value } = e.target;
     setReview(e.target.value);
   };
 

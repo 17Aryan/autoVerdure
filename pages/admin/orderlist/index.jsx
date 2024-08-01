@@ -22,7 +22,9 @@ const OrderList = ({ orders = [], onOrderClick }) => {
     console.log(`Order status changed to ${e.target.value}`);
   };
 
+  
   // Render detailed view of a selected order
+  console.log(orders.orderedProducts)
   const renderOrderDetail = (order) => (
     <div className="w-[1007px] h-[848px] bg-white rounded-2xl border border-black">   
       <div className="relative left-[90px] top-[50px] h-[765px] justify-start items-start gap-[92px] inline-flex">
@@ -154,10 +156,11 @@ const OrderList = ({ orders = [], onOrderClick }) => {
           onClick={() => handleOrderClick(order)}
         >
           <td className="w-[150px]">
-            {order.orderedProducts[0].productName + 
-              ((order.orderedProducts.length === 1) ? '' : `+ ${order.orderedProducts.length - 1} more`)}
+            {/* {order.orderedProducts[0].productName + 
+              ((order.orderedProducts.length === 1) ? '' : `+ ${order.orderedProducts.length - 1} more`)} */}
+            {order.ordererEmail}
           </td>
-          <td>{order.shippingAddress.city}</td>
+          <td>{order.shippingAddress.fullName}</td>
           <td>Paid</td>
           <td>{order.orderTime}</td>
         </tr>

@@ -1,7 +1,7 @@
 import admin from 'firebase-admin';
 
 const serviceAccount = JSON.parse(
-    process.env.FIREBASE_SERVICE_ACCOUNT_KEYS
+     process.env.FIREBASE_SERVICE_ACCOUNT_KEYS
 );
 
 if (!admin.apps.length) {

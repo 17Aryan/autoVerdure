@@ -4,9 +4,9 @@ import "./styles.css";
 import Select from 'react-select';
 import Image from "next/image";
 
-const ProductListPage = () => {
+const ProductListPage = ({ products: initialProducts }) => {
   const [showForm, setShowForm] = useState(false);
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState(initialProducts);
   const [productName, setProductName] = useState("");
   const [productDetails, setProductDetails] = useState("");
   const [productPrice, setProductPrice] = useState("");
@@ -98,29 +98,36 @@ const ProductListPage = () => {
     formData.append("productPrice", product.price);
     formData.append("type", product.type);
     formData.append("stockQuantity", product.stockQuantity);
-    formData.append('firstImage', product.images[0]);
-    formData.append('secondImage', product.images[1]);
-    formData.append('thirdImage', product.images[2]);
-    formData.append('fourthImage', product.images[3]);
-    formData.append('fifthImage', product.images[4]);
+
+    const images = product.images;
+    formData.append('firstImage', images[0]);
+    formData.append('secondImage', images[1]);
+    formData.append('thirdImage', images[2]);
+    formData.append('fourthImage', images[3]);
+    formData.append('fifthImage', images[4]);
+
     formData.append('innerLength', product.innerLength);
     formData.append('innerHeight', product.innerHeight);
     formData.append('dimensions', product.dimensions);
 
-    Object.keys(product.attributes).forEach((key) => {
-      formData.append(`attributes[${key}]`, product.attributes[key]);
-    });
-
-    product.colors.forEach((color, index) => {
-      formData.append(`colors[${index}]`, color);
+    Object.keys(checkboxes).forEach((key) => {
+      formData.append(key,`${checkboxes[key]}`);
+    })
+    // Object.keys(product.attributes).forEach((key) => {
+    //   formData.append(`attributes[${key}]`, product.attributes[key]);
+    // });
+    // console.log(colors)
+    colors.forEach((color, index) => {
+      console.log(color.value)
+      formData.append(color.value,'true');
     });
 
     product.size.forEach((size, index) => {
-      formData.append(`size[${index}]`, size);
+      formData.append(size,'true');
     });
 
     product.finish.forEach((finish, index) => {
-      formData.append(`finish[${index}]`, finish);
+      formData.append(finish,'true');
     });
 
     return formData;
@@ -204,6 +211,7 @@ const ProductListPage = () => {
   
       try {
         const formData = createFormData(newProduct);
+        logFormData(formData)
         const response = await fetch('/api/products/add', {
           method: 'POST',
           body: formData,
@@ -341,10 +349,10 @@ const ProductListPage = () => {
                 className="px-[35px] py-[38px] text-xs w-full border-[1px] border-black rounded-2xl bg-white flex justify-between items-center"
                 >
                 <input type="checkbox" checked={selectedProducts.includes(index)} className="product-checkbox" onChange={(e) => handleCheckboxChange(index)}/>
-                  <td className="w-[110px]">{product.name}</td>
+                  <td className="w-[110px]">{product.productName}</td>
                   <td className="w-[120px]">{product.dimensions}</td>
                   <td className="w-[70px]">{product.stockQuantity}</td>
-                  <td className="w-[90px]">{product.type}</td>
+                  <td className="w-[90px]">{product.productType}</td>
                   <td className="w-[70px] flex justify-around items-center">
                     <button onClick={() => handleEdit(index)}
                       className="edit-button">

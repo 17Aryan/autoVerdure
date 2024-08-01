@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import OrderList from "../orderlist";
+import OrderContext from "@/pages/ordercontext";
 
 const AdminOrders = (props) => {
   const orders = props.orders;
@@ -9,6 +10,18 @@ const AdminOrders = (props) => {
   const handleOrderClick = (order) => {
     setSelectedOrder(order);
   };
+
+  const handleOrderStatusChange = async (orderId, newStatus) =>{
+    const response = await fetch('api/orders/${orderId}',{
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ orderStatus: newStatus })
+    });
+    const updatedOrder = await response.json();
+    updatedOrder(updatedOrder)
+  }
 
   return (
     <div className="py-[62px] md:pt-[132px] md:pb-[188px] xl:pt-[106px] xl:pb-[260px] 2xl:pb-[320px] px-4 md:px-[51px] xl:px-[216px] 2xl:px-[270px] flex flex-col gap-5 bg-[#FFFCF8]">
