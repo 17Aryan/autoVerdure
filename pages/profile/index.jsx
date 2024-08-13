@@ -315,7 +315,7 @@ export async function getServerSideProps({ req, res }) {
                 firstName: user.username.split(' ')[0],
                 lastName: user.username.split(' ')[1],
                 email: user.email,
-                phone: user.phone 
+                phone: (user.phone || null)
             }
             return {
                 props: { user: parsedUser },
