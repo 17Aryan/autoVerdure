@@ -306,7 +306,7 @@ export async function getServerSideProps({ req, res }) {
             if (!user) {
               return {
                 redirect: {
-                    destination: '/profile',
+                    destination: '/signin',
                     permanent: false,
                 },
             };
@@ -315,7 +315,7 @@ export async function getServerSideProps({ req, res }) {
                 firstName: user.username.split(' ')[0],
                 lastName: user.username.split(' ')[1],
                 email: user.email,
-                phone: (user.phone || null)
+                phone: user.phone 
             }
             return {
                 props: { user: parsedUser },
