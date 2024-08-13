@@ -466,9 +466,9 @@ const ProductListPage = ({ products: initialProducts }) => {
                 <option value="" disabled>
                   Select Type
                 </option>
-                <option value="GroBox">GroBox</option>
-                <option value="ZenPot">ZenPot</option>
-                <option value="Plant">Plant</option>
+                <option value="grobox">GroBox</option>
+                <option value="zenpot">ZenPot</option>
+                <option value="plants">Plant</option>
                 <option value="accessory">Accessory</option>
               </select>
             </div>
