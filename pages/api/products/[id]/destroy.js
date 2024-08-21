@@ -21,20 +21,19 @@ async function destroyProduct(productId) {
             for (const imageId of imageIds) {
                 await db.collection('images').doc(imageId).delete();
                 const bucket = storage.bucket();
-
                 await bucket.file(`images/${imageId}`).delete();
             }
         }
 
         return true;
     } catch (error) {
-        console.log(error);
+        console.log("Error deleting the products:",error);
         return false;
     }
 }
 
 export default async function handler(req, res) {
-    if (req.method === 'GET') {
+    if (req.method === 'DELETE') {
 
         const user = await currentUser(req);
 
@@ -44,6 +43,11 @@ export default async function handler(req, res) {
         }
 
         const { id } = req.query;
+
+        if (!id) {
+            res.status(400).json({ error: 'Product ID is required.' });  // Added validation
+            return;
+        }
         
         const result = await destroyProduct(id);
 
@@ -57,7 +61,7 @@ export default async function handler(req, res) {
         }
 
     } else {
-        res.setHeader('Allow', ['POST']);
+        res.setHeader('Allow', ['DELETE']);
         res.status(405).json({ error: `Method '${req.method}' Not Allowed` });
         return;
     }

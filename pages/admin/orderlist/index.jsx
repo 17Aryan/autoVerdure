@@ -71,7 +71,7 @@ const OrderList = ({ orders = [], onOrderClick }) => {
                     onChange={handleOrderStatusChange}
                     className="px-4 py-2 rounded-[20px] w-[200px] flex justify-center items-center bg-[#FFF5EB] text-[#FB7E15]"
                   >
-                    <option value="Shipping">Shipping</option>
+                    <option value="Shipping"><a href='./profile/orderlist/'>Shipping</a></option>
                     <option value="Processing">Processing</option>
                     <option value="Dispatch">Dispatch</option>
                     <option value="Delivered">Delivered</option>

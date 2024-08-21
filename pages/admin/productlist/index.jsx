@@ -56,6 +56,7 @@ const ProductListPage = ({ products: initialProducts }) => {
   const [loading, setLoading] = useState(false);
   const [editIndex, setEditindex] = useState(null);
   const [selectedProducts, setSelectedProducts] = useState([])
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const handleAddProductClick = () => {
     setShowForm(true);
@@ -87,6 +88,7 @@ const ProductListPage = ({ products: initialProducts }) => {
     setProductImages({ ...productImages, [key]: file });
   };
 
+  //handle addProduct and product listing
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -240,7 +242,7 @@ const ProductListPage = ({ products: initialProducts }) => {
     }, 2000);
   };
   
-
+  //handle editing product
   const handleEdit = (index) => {
     const editedProduct = products[index];
     setProductName(editedProduct.name);
@@ -305,13 +307,48 @@ const ProductListPage = ({ products: initialProducts }) => {
     }
   };
 
-  const handleDeleteChecked = async () => {
-    const updatedProducts = products.filter((_,i) => !selectedProducts.includes(i));
+
+  //handling delete operations
+  const handleDeleteChecked =async () => {
+    console.log("delet")
+    setIsDeleting(true);// disable button and show loading state
+
+    // const updatedProducts = products.filter((_,i) => !selectedProducts.includes(i));
     const idsToDelete = products
       .filter((_,i) => selectedProducts.includes(i))
       .map((product) => product.id)
-    setProducts(updatedProducts);
-    setSelectedProducts([])
+
+      console.log(idsToDelete)
+    try {
+      //loop through products to delete one by one 
+      for(const productId of idsToDelete) {
+        const response =await fetch(`/api/products/${productId}/destroy`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          // body: JSON.stringify({ ids: idsToDelete }),
+        });
+        if (!response.ok) {
+          throw new Error(`Failed to delete product with ID: ${productId}`);
+        }
+      }
+      // const result= await response.json();
+      console.log('Deleted Products: ',idsToDelete);
+
+      // Update the products list by filtering out the deleted products
+    const updatedProducts = products.filter(
+      (product) => !idsToDelete.includes(product.id)
+    );
+
+    // Update the state with the new products list and clear selected products
+      setProducts(updatedProducts);
+      setSelectedProducts([])
+    }catch(error){
+        console.error('There was problem with fetch operations: ',error);
+    }finally{
+      setIsDeleting(false);//re-enable button after operation 
+    }
   };
   return (
     <div className="container">
@@ -326,8 +363,10 @@ const ProductListPage = ({ products: initialProducts }) => {
               Add Product
             </button>
             <button onClick={ handleDeleteChecked}
-                className="delete-checked-button">
-                Delete
+                className="delete-checked-button"
+                disabled={isDeleting} //disable button during operation
+                >
+                {isDeleting ? 'Deleting...':'Delete'}
             </button>
           </div>
           
